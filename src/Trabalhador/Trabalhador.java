@@ -1,4 +1,6 @@
-package Main;
+package Trabalhador;
+
+import Main.*;
 
 /**
  *
@@ -10,15 +12,17 @@ public class Trabalhador {
     private String nome;
     private double salario;
     private boolean aposentado;
+    private String departamento;
 
-    public Trabalhador() {
-    }
-
-    public Trabalhador(String cpf, String nome, double salario, boolean aposentado) {
+    public Trabalhador(String cpf, String nome, double salario, String departamento, boolean aposentado) {
         this.cpf = cpf;
         this.nome = nome;
         this.salario = salario;
         this.aposentado = aposentado;
+        this.departamento = departamento;
+    }
+
+    public Trabalhador() {
     }
 
     public String getCpf() {
@@ -53,9 +57,17 @@ public class Trabalhador {
         this.aposentado = aposentado;
     }
 
+    public String getDepartamento() {
+        return departamento;
+    }
+
+    public void setDepartamento(String departamento) {
+        this.departamento = departamento;
+    }
+
     @Override
     public String toString() {
-        return cpf + ";" + nome + ";" + salario + ";" + aposentado;
+        return cpf + ";" + nome + ";" + salario + ";" + departamento + ";" + aposentado;
     }
 
 }

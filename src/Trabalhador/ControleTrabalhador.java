@@ -1,5 +1,6 @@
-package Main;
+package Trabalhador;
 
+import Main.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,11 +8,11 @@ import java.util.List;
  *
  * @author radames
  */
-public class Controle {
+public class ControleTrabalhador {
 
     private List<Trabalhador> lista = new ArrayList<>();
 
-    public Controle() { //esse construtor é usado para adicionar alguns dados na lista e 
+    public ControleTrabalhador() { //esse construtor é usado para adicionar alguns dados na lista e 
 
     }
 
