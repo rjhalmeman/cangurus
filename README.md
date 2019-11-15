@@ -28,6 +28,7 @@
 <img src="https://user-images.githubusercontent.com/31520662/68558508-57622f00-0418-11ea-86b0-c517453f0728.png"/>
 <p>10° passo:</p>
 <p>Aguarde a decisão do professor.</p>
+<p>Obs: sempre mantenha o fork sincronizado com o repositório original, <a href="https://github.com/grupy-sp/encontros/wiki/Como-sincronizar-o-seu-Fork-com-o-repo-principal">tutorial</a> ou <a href="https://youtu.be/GYK4Qmy6tjU">tutorial-video.</a></p>
 <h2>Extras</h2>
 <p>Faça pull requests com poucas alterações, prefira quebrar em partes menores.</p>
 <p>A branch master é a branch com o código estável do projeto, assim, prefira fazer alterações em uma outra branch. Para fazer o pull request usando uma branch diferente da master, siga esse <a href="https://www.digitalocean.com/community/tutorials/como-criar-um-pull-request-no-github-pt" target="_blank">tutorial</a> ou <a href="https://blog.da2k.com.br/2015/02/04/git-e-github-do-clone-ao-pull-request/" target="_blank">esse</a>.
