@@ -2,19 +2,11 @@ package Main;
 
 import java.awt.Dimension;
 
-/**
- *
- * @author radames
- */
-public class Main {
+public class Main_1 {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
         Dimension dimensao = new Dimension(600, 300);
         new MenuPrincipal(dimensao);
-
     }
-
+    
 }

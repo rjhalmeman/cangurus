@@ -1,5 +1,6 @@
-package Main;
+package Trabalhador;
 
+import Main.*;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Container;
@@ -7,6 +8,8 @@ import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
@@ -27,11 +30,12 @@ import javax.swing.table.DefaultTableModel;
 import tools.JanelaPesquisar;
 import tools.ManipulaArquivo;
 import tools.ManipulaImagem;
+
 /**
  *
  * @author radames
  */
-public class GUI extends JFrame {
+public class GUITrabalhador extends JFrame {
 
     private Container cp;
 
@@ -41,6 +45,8 @@ public class GUI extends JFrame {
     private JTextField tfNome = new JTextField(50);
     private JLabel lbSalario = new JLabel("Salário");
     private JTextField tfSalario = new JTextField(20);
+    private JLabel lbDepartamento = new JLabel("Departamento");
+    private JTextField tfDepartamento = new JTextField(20);
     private JCheckBox cbAposentado = new JCheckBox("Aposentado", false);
     private JButton btAdicionar = new JButton("Adicionar");
     private JButton btListar = new JButton("Listar");
@@ -63,7 +69,7 @@ public class GUI extends JFrame {
     private String acao = "";
     private String chavePrimaria = "";
 
-    private Controle controle = new Controle();
+    private ControleTrabalhador controle = new ControleTrabalhador();
     private Trabalhador trabalhador = new Trabalhador();
     private ManipulaImagem manipulaImagem = new ManipulaImagem();
     String[] colunas = new String[]{"Id", "Nome", "Endereço", "Aposentado"};
@@ -76,10 +82,9 @@ public class GUI extends JFrame {
     private JPanel painel2 = new JPanel(new GridLayout(1, 1));
     private CardLayout cardLayout;
 
-    public GUI() {
+    public GUITrabalhador() {
 
         String caminhoENomeDoArquivo = "DadosTrabalhador.csv"; //csv
-      
 
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
@@ -88,33 +93,33 @@ public class GUI extends JFrame {
         setLocationRelativeTo(null);//centro do monitor
 
         cp = getContentPane();
-        
-        ImageIcon icon=manipulaImagem.criaIcon("/icones/retrieve.png", 30, 30);
-        btBuscar=manipulaImagem.insereBotao(icon, "Buscar");
-        
-        icon=manipulaImagem.criaIcon("/icones/list.png", 30, 30);
-        btListar=manipulaImagem.insereBotao(icon, "Listar");
-        
-        icon=manipulaImagem.criaIcon("/icones/retrieve_1.png", 30, 30);
-        btLocalizar=manipulaImagem.insereBotao(icon, "Localizar");
-        
-        icon=manipulaImagem.criaIcon("/icones/delete_1.png", 30, 30);
-        btExcluir=manipulaImagem.insereBotao(icon, "Excluir");
-        
-        icon=manipulaImagem.criaIcon("/icones/update.png", 35, 30);
-        btAlterar=manipulaImagem.insereBotao(icon, "Alterar");
-        
-        icon=manipulaImagem.criaIcon("/icones/save-as.png", 30, 30);
-        btSalvar=manipulaImagem.insereBotao(icon, "Salvar");
-        
-        icon=manipulaImagem.criaIcon("/icones/newCancelar.png", 30, 30);
-        btCancelar=manipulaImagem.insereBotao(icon, "Cancelar");
-        
-        icon=manipulaImagem.criaIcon("/icones/save.png", 30, 30);
-        btGravar=manipulaImagem.insereBotao(icon, "Gravar");
-        
-        icon=manipulaImagem.criaIcon("/icones/create_1.png", 30, 30);
-        btAdicionar=manipulaImagem.insereBotao(icon, "Adicionar");
+
+        ImageIcon icon = manipulaImagem.criaIcon("/icones/retrieve.png", 30, 30);
+        btBuscar = manipulaImagem.insereBotao(icon, "Buscar");
+
+        icon = manipulaImagem.criaIcon("/icones/list.png", 30, 30);
+        btListar = manipulaImagem.insereBotao(icon, "Listar");
+
+        icon = manipulaImagem.criaIcon("/icones/retrieve_1.png", 30, 30);
+        btLocalizar = manipulaImagem.insereBotao(icon, "Localizar");
+
+        icon = manipulaImagem.criaIcon("/icones/delete_1.png", 30, 30);
+        btExcluir = manipulaImagem.insereBotao(icon, "Excluir");
+
+        icon = manipulaImagem.criaIcon("/icones/update.png", 35, 30);
+        btAlterar = manipulaImagem.insereBotao(icon, "Alterar");
+
+        icon = manipulaImagem.criaIcon("/icones/save-as.png", 30, 30);
+        btSalvar = manipulaImagem.insereBotao(icon, "Salvar");
+
+        icon = manipulaImagem.criaIcon("/icones/newCancelar.png", 30, 30);
+        btCancelar = manipulaImagem.insereBotao(icon, "Cancelar");
+
+        icon = manipulaImagem.criaIcon("/icones/save.png", 30, 30);
+        btGravar = manipulaImagem.insereBotao(icon, "Gravar");
+
+        icon = manipulaImagem.criaIcon("/icones/create_1.png", 30, 30);
+        btAdicionar = manipulaImagem.insereBotao(icon, "Adicionar");
 
         cp.setLayout(new BorderLayout());
         cp.add(painelNorte, BorderLayout.NORTH);
@@ -137,12 +142,14 @@ public class GUI extends JFrame {
         painelNorte.setLayout(new GridLayout(1, 1));
         painelNorte.add(toolBar);
 
-        painelCentro.setLayout(new GridLayout(3, 2));
+        painelCentro.setLayout(new GridLayout(4, 2));
 
         painelCentro.add(lbNome);
         painelCentro.add(tfNome);
         painelCentro.add(lbSalario);
         painelCentro.add(tfSalario);
+        painelCentro.add(lbDepartamento);
+        painelCentro.add(tfDepartamento);
         painelCentro.add(cbAposentado);
 
         toolBar.add(lbCpf);
@@ -164,6 +171,7 @@ public class GUI extends JFrame {
 
         tfNome.setEditable(false);
         tfSalario.setEditable(false);//atributos começam bloqueados
+        tfDepartamento.setEditable(false);
         cbAposentado.setEnabled(false);
         texto.setEditable(false);
 
@@ -177,7 +185,7 @@ public class GUI extends JFrame {
                     List<String> listaStringCsv = manipulaArquivo.abrirArquivo(caminhoENomeDoArquivo);//traz os dados em formato string - csv
                     for (String linha : listaStringCsv) {//para cada linha da lista - csv
                         aux = linha.split(";");//divida os campos nos ;
-                        t = new Trabalhador(aux[0], aux[1], Double.valueOf(aux[2]), Boolean.valueOf(aux[3].equals("true") ? true : false));//crie um objeto Trabalhador e preencha com dados.
+                        t = new Trabalhador(aux[0], aux[1], Double.valueOf(aux[2]), String.valueOf(aux[3]), Boolean.valueOf(aux[4].equals("true") ? true : false));//crie um objeto Trabalhador e preencha com dados.
                         controle.adicionar(t); //adicione na lista
                     }
                     cardLayout.show(painelSul, "Listagem");
@@ -199,6 +207,8 @@ public class GUI extends JFrame {
         btLocalizar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                /*ManipulaArquivo manipulaArquivo = new ManipulaArquivo();//C:/Users/jvmor/Documents/NetBeansProjects/Cobaia/
+                List<String> listaAuxiliar = manipulaArquivo.abrirArquivo("DadosDepartamento.csv");*/
                 List<String> listaAuxiliar = controle.listStrings();
                 if (listaAuxiliar.size() > 0) {//se a lista não estiver vazia abre a janela
                     Point lc = btLocalizar.getLocationOnScreen();//precisa mexer aqui para centralizar a janela// o ponto onde a janela vai abrir
@@ -241,6 +251,7 @@ public class GUI extends JFrame {
                         btExcluir.setVisible(false);
                         tfNome.setText("");
                         tfSalario.setText("");
+                        tfDepartamento.setText("");
                         cbAposentado.setSelected(false);
                         texto.setText("Não encontrou na lista - pode Adicionar\n\n\n");//limpa o campo texto
 
@@ -253,7 +264,8 @@ public class GUI extends JFrame {
                         btLocalizar.setVisible(true);
                         texto.setText("Encontrou na lista - pode Alterar ou Excluir\n\n\n");//limpa o campo texto
                         tfNome.setEditable(false);
-                        tfSalario.setEditable(false);//atributos começam bloqueados
+                        tfSalario.setEditable(false);
+                        tfDepartamento.setEditable(false);//atributos começam bloqueados
                         cbAposentado.setEnabled(false);
                     }
                 }
@@ -280,6 +292,7 @@ public class GUI extends JFrame {
                 texto.setText("Preencha os atributos\n\n\n\n\n");//limpa o campo texto
                 tfNome.setEditable(true);
                 tfSalario.setEditable(true);
+                tfDepartamento.setEditable(true);
                 cbAposentado.setEnabled(true);
             }
         });
@@ -301,6 +314,8 @@ public class GUI extends JFrame {
                 texto.setText("Preencha os atributos\n\n\n\n\n");//limpa o campo texto
                 tfNome.setEditable(true);
                 tfSalario.setEditable(true);
+                tfDepartamento.setEditable(true);
+
                 cbAposentado.setEnabled(true);
             }
         });
@@ -315,12 +330,15 @@ public class GUI extends JFrame {
                 tfCpf.setEditable(true);
                 tfNome.setText("");
                 tfSalario.setText("");
+                tfDepartamento.setText("");
                 cbAposentado.setSelected(false);
                 tfCpf.requestFocus();
                 tfCpf.selectAll();
                 texto.setText("Cancelou\n\n\n\n\n");//limpa o campo texto
                 tfNome.setEditable(false);
                 tfSalario.setEditable(false);
+                tfDepartamento.setEditable(false);
+
                 cbAposentado.setEnabled(false);
             }
         });
@@ -333,6 +351,7 @@ public class GUI extends JFrame {
                     trabalhador.setNome(tfNome.getText());
                     trabalhador.setSalario(Double.valueOf(tfSalario.getText()));
                     trabalhador.setAposentado(cbAposentado.isSelected());
+                    trabalhador.setDepartamento(String.valueOf(tfDepartamento.getText()));
                     controle.alterar(trabalhador, trabalhadorAntigo);
                     texto.setText("Registro alterado\n\n\n\n\n");//limpa o campo texto
                 } else {//adicionar
@@ -341,6 +360,7 @@ public class GUI extends JFrame {
                     trabalhador.setNome(tfNome.getText());
                     trabalhador.setSalario(Double.valueOf(tfSalario.getText()));
                     trabalhador.setAposentado(cbAposentado.isSelected());
+                    trabalhador.setDepartamento(String.valueOf(tfDepartamento.getText()));
                     controle.adicionar(trabalhador);
                     texto.setText("Foi adicionado um novo registro\n\n\n\n\n");//limpa o campo texto
                 }
@@ -352,10 +372,13 @@ public class GUI extends JFrame {
                 tfCpf.setEditable(true);
                 tfNome.setText("");
                 tfSalario.setText("");
+                tfDepartamento.setText("");
                 tfCpf.requestFocus();
                 tfCpf.selectAll();
                 tfNome.setEditable(false);
                 tfSalario.setEditable(false);
+                tfDepartamento.setEditable(false);
+
                 cbAposentado.setSelected(false);
                 cbAposentado.setEnabled(true);
             }
@@ -371,7 +394,7 @@ public class GUI extends JFrame {
                                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)) {
                     controle.excluir(trabalhador);
                     texto.setText("Excluiu o registro de " + trabalhador.getCpf() + " - " + trabalhador.getNome() + "\n\n\n\n\n");//limpa o campo texto
-                }else{
+                } else {
                     texto.setText("Não excluiu o registro de " + trabalhador.getCpf() + " - " + trabalhador.getNome() + "\n\n\n\n\n");//limpa o campo texto
                 }
                 btBuscar.setVisible(true);
@@ -379,13 +402,14 @@ public class GUI extends JFrame {
                 tfCpf.setEditable(true);
                 tfNome.setText("");
                 tfSalario.setText("");
+                tfDepartamento.setText("");
                 cbAposentado.setSelected(false);
                 cbAposentado.setEnabled(true);
                 tfCpf.requestFocus();
                 tfCpf.selectAll();
                 btExcluir.setVisible(false);
                 btAlterar.setVisible(false);
-                
+
             }
         });
 
@@ -400,7 +424,7 @@ public class GUI extends JFrame {
 //                    {"João da Silva", "48 8890-3345", "joaosilva@hotmail.com"},
 //                    {"Pedro Cascaes", "48 9870-5634", "pedrinho@gmail.com"}
 //                };
-                String[] colunas = {"Id", "Nome", "Salário", "Aposentado"};
+                String[] colunas = {"Id", "Nome", "Salário", "Departamento", "Aposentado"};
 
                 Object[][] dados = new Object[lt.size()][colunas.length];
                 String aux[];
@@ -422,17 +446,42 @@ public class GUI extends JFrame {
             }
         });
 
-        addWindowListener(new WindowAdapter() {
+        tfDepartamento.addMouseListener(new MouseAdapter() {
             @Override
-            public void windowClosing(WindowEvent e) {
+            public void mouseClicked(MouseEvent e) {
+                ManipulaArquivo manipulaArquivo = new ManipulaArquivo();//C:/Users/jvmor/Documents/NetBeansProjects/Cobaia/
+                List<String> listaAuxiliar = manipulaArquivo.abrirArquivo("DadosDepartamento.csv");
+                if (listaAuxiliar.size() > 0) {//se a lista não estiver vazia abre a janela
+                    Point lc = tfDepartamento.getLocationOnScreen();//precisa mexer aqui para centralizar a janela// o ponto onde a janela vai abrir
+                    lc.x = lc.x + tfDepartamento.getWidth();//um pouco para frente do botão localizar
+                    String selectedItem = new JanelaPesquisar(listaAuxiliar, lc.x,
+                            lc.y).getValorRetornado();////matriz x coluna y é linha - posicionamento da janela
+                    if (!selectedItem.equals("")) {//pega toda a linha 
+                        String[] aux = selectedItem.split(";");//divide no ponto e virgula
+                        tfDepartamento.setText(aux[0]);//pega so cpf e preenche no textfield cpf
+                    } else {
+                        tfDepartamento.requestFocus();
+                        tfDepartamento.selectAll();
+                    }
+                }
+            }
+        });
+
+        addWindowListener(
+                new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e
+            ) {
                 //antes de sair, salvar a lista em disco
                 btGravar.doClick();
                 // Sai da classe
                 dispose();
             }
-        });
+        }
+        );
 
-        setVisible(true);
+        setVisible(
+                true);
 
         //depois que a tela ficou visível, clic o botão automaticamente.
         btCarregarDados.doClick();//execute o listener do btCarregarDados
